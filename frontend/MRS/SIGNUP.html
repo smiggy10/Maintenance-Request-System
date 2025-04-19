@@ -1,0 +1,120 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRS-Sign Up</title>
+    <link rel="icon" href="images/FAVICON.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="MRS/USER/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="signup-container">
+        
+        <!-- Left Section (Introduction & Image) -->
+        <div class="signup-leftside">
+            <img src="MRS/images/FRONT.png" alt="Front" class="Front">
+            <h2 class="introducing">INTRODUCING</h2>
+            <p class="text-center">
+                MRS is a streamlined maintenance request system where users can submit requests to report and 
+                track issues, maintenance staff manage repairs, and admins oversee operations through a web platform 
+                ensuring fast, efficient, and hassle-free maintenance solutions.
+            </p>
+        </div>
+
+        <!-- Right Section (Sign-Up Form) -->
+        <div class="signup-rightside">
+            <div class="header">
+                <span class="logo-signup">
+                    <img src="MRS/images//LOGO.png" alt="logo-signup" class="logo-signup">
+                </span>
+            </div>
+            <h2 class="sign-in-title">Sign Up</h2>
+            <p class="sign-up-text">Already have an account? <a class="create-account" href="/LOGIN.html">Login</a></p>
+            
+            <form class="signup-form" id="signup-form">
+                <div class="input-group">
+                    <label class="input-label">Name</label>
+                    <input class="input-field" type="text" id="name" placeholder="Bam Aquino" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Username</label>
+                    <input class="input-field" type="text" id="username" placeholder="@bamAqui" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">E-mail</label>
+                    <input class="input-field" type="email" id="email" placeholder="example@gmail.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Password</label>
+                    <div class="password-container">
+                        <input class="input-field" id="password1" type="password" placeholder="••••••••" required>
+                        <i class="fas fa-eye toggle-password" onclick="togglePassword('password1', this)"></i>
+                    </div>                    
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Confirm Password</label>
+                    <div class="password-container">
+                        <input class="input-field" id="password2" type="password" placeholder="••••••••" required>
+                        <i class="fas fa-eye toggle-password" onclick="togglePassword('password2', this)"></i>
+                    </div>                    
+                </div>
+
+                <button type="submit" class="sign-up-button">Sign Up</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Function to handle form submission
+        document.getElementById('signup-form').addEventListener('submit', async function(event) {
+            event.preventDefault();  // Prevent default form submission
+
+            const name = document.getElementById('name').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password1').value;
+            const confirmPassword = document.getElementById('password2').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+
+            // Send the signup request to the backend
+            const response = await fetch('http://localhost:5000/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, username, email, password, confirmPassword }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert('Signup successful! Please log in.');
+                window.location.href = 'LOGIN.html'; // Redirect to login page after successful signup
+            } else {
+                alert('Signup failed: ' + result.message);
+            }
+        });
+
+        // Function to toggle password visibility
+        function togglePassword(id, icon) {
+            const passwordField = document.getElementById(id);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordField.type = "password";
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+    </script>
+</body>
+</html>

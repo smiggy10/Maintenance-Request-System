@@ -1,0 +1,293 @@
+/* Full height for the whole page */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Prevent scrolling */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Container will take up full screen */
+.container {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: 100%;
+    height: 100vh;  /* Ensure the container spans the full viewport height */
+}
+
+/* Left side (Sign-in form) */
+.sign-in-section {
+    margin: 2rem; /* Adds margin to all sides */
+    padding: 2rem; /* Adds spacing inside */
+    width: 45%; /* Slightly reduce the width */
+    background-color: #ffffff;
+    border-radius: 1rem; /* Optional: adds rounded corners for a cleaner look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional: adds a slight shadow */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Push form upwards */
+}
+
+/* Header part of the form */
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    font-size: 2rem;
+    color: #111827;
+    margin-right: 0.5rem;
+}
+
+.logo {
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.sign-in-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1rem;
+}
+
+.sign-up-text {
+    color: #4b5563;
+    margin-bottom: 1rem;
+}
+
+.create-account {
+    color: #2563eb;
+}
+
+/* Input fields styling */
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-label {
+    display: block;
+    color: #374151;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    padding-right: 2.5rem; /* Add extra padding to make space for the eye icon */
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+}
+
+/* Container for password input and eye icon */
+.password-container {
+    position: relative;
+}
+
+/* Options (checkbox and forgot password) */
+.options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox {
+    margin-right: 0.5rem;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 0.75rem; /* Position the eye icon towards the right */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #374151;
+}
+
+.remember-text {
+    color: #374151;
+}
+
+.forgot-password {
+    color: #2563eb;
+}
+
+/* Sign-in button */
+.sign-in-button {
+    display: block;
+    width: 100%;
+    background-color: #111827;
+    color: #ffffff;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    transition: background-color 0.2s;
+    text-decoration: none; /* Removes underline */
+    margin: 0 auto; /* Centers the button */
+}
+
+.sign-in-button:hover {
+    background-color: #4b5563;
+}
+
+.or-text {
+    text-align: center;
+    color: #4b5563;
+    margin-top: 1rem;
+}
+
+/* Google sign-in button */
+.google-sign-in {
+    width: 100%;
+    margin-top: 1rem;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.google-sign-in:hover {
+    background-color: #f3f4f6;
+}
+
+.google-logo {
+    margin-right: 0.5rem;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* Right side section */
+.container-rightside {
+    margin: 0;
+    padding: 0;
+    width: 50%;
+    padding: 2rem;
+    display: flex;  /* Makes sure the content is aligned */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  /* Centers content horizontally */
+    background-color: #201F32;
+    height: 100%; /* Adjusted for full height */
+    overflow: hidden;
+}
+
+/* Image styling for the right section */
+.Front {
+    width: 100%;
+    height: auto;
+    max-width: 350px;  /* Ensure the image does not stretch */
+    object-fit: cover;
+}
+
+/* Introducing text */
+.introducing {
+    color: white;
+    font-size: 24px; /* Adjust the font size to your preference */
+    display: flex;
+}
+
+/* Text for the right section */
+.text-center {
+    color: #CFD9E0;
+    text-align: center;
+    font-size: 15px; /* Adjust the font size to your preference */
+    display: flex;
+}
+
+/* Sign-Up Page Container */
+.signup-container {
+    display: flex;
+    width: 100%;
+    height: 100vh; /* Fixed height */
+}
+
+/* Left Side (Image & Intro) */
+.signup-leftside {
+    width: 50%;
+    padding: 1.5rem; /* Reduce padding */
+    display: flex;
+    flex-direction: column;
+    background-color: #201F32; /* Dark background */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Right Side (Sign-Up Form) */
+.signup-rightside {
+    margin: 1rem; /* Reduced margin to move the form more upwards */
+    padding: 1.5rem; /* Reduced padding to minimize the space inside */
+    width: 45%; /* Slightly reduce the width */
+    background-color: #ffffff;
+    border-radius: 1rem; /* Optional: adds rounded corners for a cleaner look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Darker shadow with higher opacity */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Aligns the content towards the top */
+}
+
+/* Reduce form margin to fit */
+.signup-form {
+    flex-grow: 1; /* Increase the flex-grow to take up available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Aligns the content towards the top */
+    padding-top: 0rem; /* Remove extra top padding */
+}
+
+/* Reduce margins for input fields */
+.input-group {
+    margin-bottom: 0.5rem;
+}
+
+/* Reduce heading & paragraph size */
+.sign-in-title {
+    font-size: 1.3rem; /* Slightly smaller */
+    margin-bottom: 0.5rem; /* Reduced margin to move text up */
+}
+
+.sign-up-text {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem; /* Reduced margin to move text up */
+}
+
+
+
+.logo-signup {
+    width: 100px; /* Set the desired width */
+    height: auto; /* Maintain the aspect ratio */
+    /* Or you can set both width and height if needed */
+    /* height: 100px; */
+}
+
+/* Styling the anchor tag to look like a button */
+.sign-up-button {
+    display: block;
+    width: 100%;
+    background-color: #111827;
+    color: #ffffff;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    transition: background-color 0.2s;
+    text-decoration: none; /* Removes underline */
+    margin: 0 auto; /* Centers the button */
+}
+
+/* Hover effect */
+.sign-up-button:hover {
+    background-color: #4b5563;
+}

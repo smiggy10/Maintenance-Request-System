@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRS-Homepage</title>
+    <link rel="icon" href="../MRS/images/FAVICON.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/MRS/USER/user.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="Poppins">
+    <header>
+        <div class="header">
+            <!-- You can add content here -->
+        </div>
+    </header>
+
+    <main>
+        <div class="flex min-h-screen">
+            <!-- Sidebar -->
+            <div id="navbar-container"></div>
+
+
+            <!-- Main Content -->
+            <div class="flex-1 p-6 ml-1/5">
+                <div class="flex justify-between items-center mb-6">
+                    <input class="w-1/2 p-2 rounded-lg border border-gray-300" placeholder="Search" type="text"/>
+                </div>
+
+                <div class="flex space-x-6">
+                    <!-- Posts Section -->
+                    <div class="w-2/3 space-y-6" id="post-container">
+                        <div class="bg-gray-900 text-white p-4 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <img alt="User  profile picture" class="rounded-full w-12 h-12 mr-4" height="50" src="https://storage.googleapis.com/a1aa/image/rr6Nci0a4JgyvNKtuN7j8DE1kTDw3G1AmzEvHZxqVqI.jpg" width="50"/>
+                                <div>
+                                    <div class="flex items-center">
+                                        <span class="font-bold">Peter Obi</span>
+                                        <span class="text-gray-400 ml-2">@PeterObi</span>
+                                    </div>
+                                    <span class="text-gray-400 text-sm">7:45 am · 20 Mar 2023</span>
+                                </div>
+                            </div>
+                            <p class="mb-4">Plumbing Issue</p>
+                            <p class="text-gray-400 mb-4">*Detailed discussion of reported issue by other users*</p>
+                            <img alt="Plumbing issue image" class="rounded-lg mb-4" height="400" src="https://storage.googleapis.com/a1aa/image/DZubfQ5MecqlmEiQGfDv4fic7RoiATVaBKwy3st30rI.jpg" width="600"/>
+                            <div class="flex items-center justify-between text-gray-400">
+                                <span class="like-count">69K Likes</span>
+                                <div class="flex items-center">
+                                    <i class="far fa-heart mr-2 cursor-pointer" onclick="toggleLike(this)"></i>
+                                    <i class="far fa-comment mr-2 cursor-pointer" onclick="toggleCommentField(this)"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Announcement Section -->
+                    <div class="w-1/3" id="announcement-container">
+                        <h2 class="text-2xl font-bold mb-4">ANNOUNCEMENTS</h2>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <div class="flex items-center mb-2">
+                                    <span class="font-bold">@Username</span>
+                                    <span class="text-gray-400 ml-2">21 Feb 2025</span>
+                                </div>
+                                <p class="font-bold mb-2">CICS Second Floor CR Under Maintenance</p>
+                                <p class="text-gray-600 mb-4">
+                                    The said comfort room will not be available for use for this day. Rest assured that the operation will continue tomorrow, thank you for your understanding. Godbless...
+                                </p>
+                                <button class="bg-gray-800 text-white py-1 px-4 rounded-lg hover:bg-gray-700" onclick="showCommentField(this)">
+                                    Comment
+                                </button>
+                            </div>
+                            <button class="bg-gray-800 text-white py-1 px-4 rounded-lg hover:bg-gray-700 w-full">More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/MRS/USER/user.js"></script>
+
+    <footer>
+        <h1>"Seamless Maintenance, Effortless Solutions."</h1>
+    </footer>
+</body>
+</html>

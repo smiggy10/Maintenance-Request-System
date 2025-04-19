@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MRS-HomePage</title>
+  <link rel="icon" href="../images/FAVICON.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="user.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+  <!-- Entire page layout -->
+  <div class="flex min-h-screen">
+    <!-- Sidebar (loaded dynamically) -->
+    <div id="navbarcontainer" class="w-1/5 bg-gray-100">
+      <!-- Sidebar content (if any) -->
+    </div>
+
+    <!-- Main content -->
+    <main class="flex-1 bg-gray-100 p-6 overflow-y-auto h-screen">
+      <!-- Top Container for Search Bar -->
+      <div class="top-container mb-4">
+        <!-- Search bar -->
+        <div class="search-container">
+          <input class="search-input" placeholder="Search" type="text" />
+          <span class="search-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M16.5 9.75A6.75 6.75 0 1 0 9.75 16.5 6.75 6.75 0 0 0 16.5 9.75z" />
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- Two-column layout -->
+      <div class="two-column-layout">
+        <!-- Left: Request Overview -->
+        <div class="request-overview">
+          <div class="status-buttons-container">
+            <button class="pending-button" onclick="showContent('pending')">Pending</button>
+            <button class="completed-button" onclick="showContent('completed')">Completed</button>
+          </div>
+
+          <div class="status-content mt-4" id="status-container">
+            <!-- Default content for pending (Initially visible) -->
+            <div id="pending-content">
+              <h2 class="section-title">Pending Request</h2>
+            </div>
+            <!-- Default hidden completed content -->
+            <div id="completed-content" class="hidden">
+              <h2 class="section-title">Completed Request</h2>
+            </div>
+          </div>
+        </div>
+
+        <!-- Announcement Section -->
+        <div class="announcement-section">
+          <h2 class="section-title">ANNOUNCEMENTS</h2>
+          <div class="announcement-list">
+              <div class="announcement-card">
+                <div class="announcement-header">
+                  <span class="username">@Username</span>
+                  <span class="date">21 Feb 2025</span>
+                </div>
+                <p class="announcement-title">CICS Second Floor CR Under Maintenance</p>
+                <p class="announcement-description">
+                  The said comfort room will not be available for use for this day. Rest assured that the operation will continue tomorrow, thank you for your understanding. Godbless...
+                </p>
+              
+                <!-- Comment Button -->
+                <button class="comment-button" onclick="showCommentField(this)">
+                  Comment
+                </button>
+              
+                <!-- Hidden Comment Box -->
+                <div class="comment-box">
+                  <textarea class="comment-textarea" placeholder="Write a comment..."></textarea>
+                  <button class="submit-comment-button">Submit</button>
+                </div>
+              </div>
+            
+            <button class="more-button">More</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="mt.js"></script>
+</body>
+</html>

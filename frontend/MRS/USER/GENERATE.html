@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MRS-Generate Report</title>
+  <link rel="icon" href="../images/FAVICON.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="user.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close" />
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- Main Content -->
+  <main class="flex min-h-screen">
+    <!-- Sidebar -->
+    <div id="navbar-container"></div>
+
+
+    <!-- Main Section -->
+    <div class="flex-1 p-6">
+        <h3 class="H3">REQUEST SECTION</h3>
+
+        <section class="request-section">
+            <div class="request-upload relative">
+                <!-- Close Button -->
+                <button
+                  aria-label="Close request section"
+                  class="close-btn"
+                  type="button"
+                  onclick="window.location.href='HOMEPAGE.html';"
+                >
+                  <span class="material-symbols-outlined">close</span>
+                </button>
+            
+                <!-- Hidden File Input -->
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/png, image/jpeg, video/mp4"
+                  style="display: none"
+                  onchange="previewFile()"
+                />
+            
+                <!-- Upload Button -->
+                <button
+                  type="button"
+                  class="upload-box"
+                  aria-label="Upload Image or Video"
+                  onclick="document.getElementById('fileInput').click();"
+                  id="uploadButton"
+                >
+                  <img
+                    alt="Upload Icon"
+                    class="upload-img"
+                    src="../images/Vector.png"
+                  />
+                </button>
+            
+                <div id="filePreviewContainer" class="hidden">
+                    <div id="filePreview"></div>
+                    <button id="replaceButton" class="replace-button" style="display: none;" onclick="document.getElementById('fileInput').click();">Replace</button>
+                  </div>
+                  
+            
+                <p>
+                  Kindly Upload Picture or<br />
+                  Video of the Reported Issue
+                </p>
+              </div>
+              
+
+        <div class="request-details">
+          <input placeholder="What kind of issue would you like to report?" type="text" />
+          <textarea placeholder="Write Brief Description..." rows="6"></textarea>
+
+          <div class="relative">
+            <select aria-label="Select Location">
+              <option disabled selected>Select Location</option>
+              <option>CICS BUILDING</option>
+              <option>CEAFA BUILDING</option>
+              <option>RGR BUILDING</option>
+              <option>FDC BUILDING</option>
+              <option>PARKING LOT</option>
+
+            </select>
+            <div class="location-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+          </div>
+
+          <div class="submit-wrapper">
+            <button class="submit-button" type="submit">Submit</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer at bottom -->
+  <footer>
+    <h1>"Seamless Maintenance, Effortless Solutions."</h1>
+  </footer>
+
+  <script src="user.js"></script>
+</body>
+</html>

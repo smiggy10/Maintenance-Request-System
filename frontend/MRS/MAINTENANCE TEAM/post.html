@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MRS-HomePage</title>
+  <link rel="icon" href="../images/FAVICON.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="user.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+    <!-- Entire page layout -->
+    <div class="flex min-h-screen">
+        <!-- Posts Section -->
+        <div class="posts-section" id="post-container">
+            <div class="post-card">
+            <div class="post-header">
+                <img 
+                alt="User profile picture" 
+                class="user-avatar" 
+                src="https://storage.googleapis.com/a1aa/image/rr6Nci0a4JgyvNKtuN7j8DE1kTDw3G1AmzEvHZxqVqI.jpg" 
+                width="50" height="50"
+                />
+                <div>
+                <div class="user-info">
+                    <span class="user-name">Peter Obi</span>
+                    <span class="user-handle">@PeterObi</span>
+                </div>
+                <span class="post-date">7:45 am · 20 Mar 2023</span>
+                </div>
+            </div>
+        
+            <p class="post-title">Plumbing Issue</p>
+            <p class="post-description">*Detailed discussion of reported issue by other users*</p>
+        
+            <img 
+                alt="Plumbing issue image" 
+                class="post-image" 
+                src="https://storage.googleapis.com/a1aa/image/DZubfQ5MecqlmEiQGfDv4fic7RoiATVaBKwy3st30rI.jpg" 
+                width="600" height="400"
+            />
+        
+            <div class="post-actions">
+                <span class="like-count">69K Likes</span>
+                <div class="action-icons">
+                <i class="far fa-heart action-icon" onclick="toggleLike(this)"></i>
+                <i class="far fa-comment action-icon" onclick="toggleCommentField(this)"></i>
+                </div>
+            </div>
+            </div>
+        </div>
+  
+    </div>
+
+</body>
+<script src="mt.js"></script>
+
+</html>

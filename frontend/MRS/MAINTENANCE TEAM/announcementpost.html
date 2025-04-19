@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MRS-HomePage</title>
+  <link rel="icon" href="../images/FAVICON.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="mt.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <!-- Entire page layout -->
+    <div class="flex min-h-screen flex-col p-6">
+        <!-- Announcement Section -->
+        <div class="announcement-section bg-white p-4 rounded-lg shadow-md mb-6">
+            <h2 class="section-title text-2xl font-semibold mb-4">ANNOUNCEMENTS</h2>
+            <div class="announcement-list">
+                <div class="announcement-card bg-gray-50 p-4 rounded-lg shadow-md mb-4">
+                    <div class="announcement-header flex justify-between text-sm text-gray-500">
+                        <span class="username">@Username</span>
+                        <span class="date">21 Feb 2025</span>
+                    </div>
+                    <p class="announcement-title text-xl font-bold mt-2">CICS Second Floor CR Under Maintenance</p>
+                    <p class="announcement-description text-gray-700 mt-2">
+                        The said comfort room will not be available for use for this day. Rest assured that the operation will continue tomorrow, thank you for your understanding. Godbless...
+                    </p>
+                    <button class="comment-button mt-4 bg-blue-500 text-white py-2 px-4 rounded" onclick="showCommentField(this)">
+                        Comment
+                    </button>
+                </div>
+                <button class="more-button w-full mt-4 bg-gray-200 py-2 px-4 rounded text-center text-gray-800">
+                    More
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="mt.js"></script>
+</body>
+</html>
+
+
+
+
+

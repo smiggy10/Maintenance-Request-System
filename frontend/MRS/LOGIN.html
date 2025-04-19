@@ -1,0 +1,103 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRS-Sign In</title>
+    <link rel="icon" href="FAVICON.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="MRS/USER/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sign-in-section">
+            <div class="header">
+                <span class="logo">
+                    <img src="MRS/images//LOGO.png" alt="logo" class="logo">
+                </span>
+            </div>
+            <h2 class="sign-in-title">Sign In</h2>
+            <form id="sign-in-form">
+                <div class="input-group">
+                    <label class="input-label">E-mail</label>
+                    <input class="input-field" type="email" id="email" placeholder="example@gmail.com" required>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Password</label>
+                    <div class="password-container">
+                        <input class="input-field" id="password" type="password" placeholder="••••••••" required>
+                        <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i> <!-- Eye icon -->
+                    </div>                    
+                </div>
+                <br></br>
+                <button type="submit" class="sign-up-button">Sign In</button>
+            </form>            
+            <div class="or-text">
+                <span>or</span>
+                <br></br>
+            </div>
+            <button type="button" class="sign-up-button" onclick="window.location.href='/SIGNUP.html';">Sign Up</button>
+        </div>
+    <div class="container-rightside">
+        <img src="MRS/images//FRONT.png" alt="Front" class="Front">
+
+        <h2 class="introducing">
+            INTRODUCING
+           </h2>
+        <p class="text-center">MRS is a streamlined maintenance 
+            request system where users can submit requests to report and 
+            track issues, maintenance staff manage repairs, and admins oversee 
+            operations through a web platform ensuring fast, efficient, and 
+            hassle-free maintenance solutions.
+        </p>
+
+    </div>
+    </div>
+
+    <!-- Add JavaScript to handle form submission -->
+    <script>
+        // Function to handle form submission
+        document.getElementById('sign-in-form').addEventListener('submit', async (e) => {
+            e.preventDefault();  // Prevent the default form submission
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Send the login request to the backend
+            const response = await fetch('http://localhost:5000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const result = await response.json();
+            
+            if (response.ok) {
+                // If login is successful, you can store the token and redirect to another page
+                localStorage.setItem('token', result.token);  // Store JWT token in localStorage
+                alert('Login successful');
+                // Redirect to the user dashboard or another page
+                window.location.href = '/dashboard';  // Change this to the actual dashboard page URL
+            } else {
+                // Handle login failure
+                alert('Login failed: ' + result.message);
+            }
+        });
+
+        // Function to toggle password visibility (optional)
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const passwordIcon = document.querySelector('.toggle-password');
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                passwordIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordField.type = "password";
+                passwordIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+    </script>
+</body>
+</html>

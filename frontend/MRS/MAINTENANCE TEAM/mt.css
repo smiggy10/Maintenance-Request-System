@@ -1,0 +1,484 @@
+/* Sidebar Styles */
+/* General Styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.main-content {
+    overflow-y: auto;
+    height: 100vh;
+    margin-left: 0px; /* Adjust this value based on your sidebar width */
+    background-color: #f8f9fa; /* Optional: Set a background color for the main content */
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.p-6 {
+    font-family: 'Poppins', sans-serif;
+
+    padding: 1.5rem;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+
+}
+
+.items-center {
+    align-items: center;
+}
+
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.text-4xl {
+    font-size: 2.25rem;
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.text-gray-800 {
+    color: #2d3748;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    color: #2d3748;
+    font-size: 1rem;
+}
+
+nav a:hover {
+    color: #7a7a8a;
+}
+
+.nav-bar {
+    margin-bottom: 2rem;
+}
+
+/* Additional styles for fixed navbar */
+.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px; /* Set a width for the sidebar */
+    background-color: #ffffff; /* Set a background color for the sidebar */
+    z-index: 10; /* Ensure it stays above other content */
+}
+
+/* Responsive Media Query for Small Screens */
+@media (max-width: 768px) {
+    .fixed {
+        width: 125%; /* Sidebar takes full width */
+        height: 100; /* Let it grow based on content */
+        position: relative; /* It now takes natural space in the layout */
+        top: 0;
+    }
+
+    .nav-bar {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        padding: 0;
+    }
+
+    .nav-bar a {
+        padding: 1rem;
+        text-align: center;
+        font-size: 0.75rem; /* Optional: smaller text for 125px */
+    }
+
+    .flex-1 {
+        margin-left: 30px; /* Prevent overlap */
+        padding-left: 0.75rem; /* Equivalent to Tailwind's pl-3 */
+        padding-top: 1rem; /* Add space so content doesn't touch nav */
+    }
+}
+
+
+
+/*NEXTTT*/
+
+/* Top Container */
+.top-container {
+    position: fixed;
+    margin-top: 0rem; /* Adds space above the search bar */
+    width: 100%; /* Ensures it takes up full width */
+  }
+  
+  /* Search Container Styling */
+  .search-container {
+    position: relative;
+    width: 100%; /* Take full width of the container */
+    max-width: 300px; /* Limiting the max width for better responsiveness */
+    margin-left: 0; /* Aligns to the left */
+    margin-right: auto; /* Ensures it stays on the left */
+    margin-bottom: 2rem; /* Adds space from the bottom */
+  }
+  
+  /* Input field */
+  .search-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    padding-left: 2.5rem;
+    border-radius: 2rem;
+    border: 1px solid #201F32; /* border-gray-300 */
+    background-color: #fff; /* bg-gray-100 */
+    outline: none;
+    transition: 0.2s ease-in-out;
+  }
+  
+  /* Focus state for the input field */
+  .search-input:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 2px #4E4D58; /* Updated color */
+}
+  
+  /* Search Icon Styling */
+  .search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%); /* Vertically center the icon */
+    color: #201F32; /* text-gray-500 */
+  }
+  
+  /* Icon size */
+  .icon-svg {
+    width: 1rem; /* Adjust to fit the input field */
+    height: 1rem; /* Adjust to fit the input field */
+  }
+  
+
+  .two-column-layout {
+    display: flex;
+    gap: 1.5rem; /* Tailwind gap-6 = 1.5rem */
+  }
+  
+  .request-overview{
+    margin-top: 4rem; /* Adds space above the search bar */
+
+    width: 60%;
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow */
+
+  }
+
+  
+  .section-title {
+    font-size: 1rem; /* text-xl */
+    font-weight: 600; /* font-semibold */
+    margin-bottom: 1rem; /* mb-4 */
+    display: flex;
+    justify-content: center;  /* Horizontally centers the text */
+    align-items: center;  /* Vertically centers the text */
+    text-align: center;  /* Ensures the text itself is centered */
+  }
+  
+  
+
+  .status-buttons-container {
+    display: flex;
+    gap: 1rem; /* Space between buttons */
+  }
+  
+  /* Completed Button Style */
+  .completed-button {
+    background-color: #201F32; /* green-600 */
+    color: #ffffff;
+    padding: 0.25rem 1rem;
+    border-radius: 1rem;
+    flex: 1;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .completed-button:hover {
+    background-color: #4E4D58; /* green-700 */
+  }
+  
+  /* Pending Button Style */
+  .pending-button {
+    background-color: #4E4D58; /* orange-500 */
+    color: #ffffff;
+    padding: 0.25rem 1rem;
+    border-radius: 1rem;
+    flex: 1;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pending-button:hover {
+    background-color: #201F32; /* orange-600 */
+  }
+  
+
+
+  .status-text {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+  
+  .hidden {
+    display: none;
+  }
+
+  /*POST SECTION*/
+  .posts-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* space-y-6 */
+  }
+  
+  .post-card {
+    background-color: #1f2937; /* bg-gray-900 */
+    color: white;
+    padding: 1rem; /* p-4 */
+    border-radius: 0.5rem; /* rounded-lg */
+  }
+  
+  .post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .user-avatar {
+    border-radius: 9999px;
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-name {
+    font-weight: bold;
+  }
+  
+  .user-handle {
+    color: #9ca3af; /* text-gray-400 */
+    margin-left: 0.5rem;
+  }
+  
+  .post-date {
+    color: #9ca3af;
+    font-size: 0.875rem;
+  }
+  
+  .post-title {
+    margin-bottom: 1rem;
+  }
+  
+  .post-description {
+    margin-bottom: 1rem;
+    color: #9ca3af;
+  }
+  
+  .post-image {
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    height: auto;
+  }
+  
+  .post-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #9ca3af;
+  }
+  
+  .action-icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .action-icon {
+    margin-right: 0.5rem;
+    cursor: pointer;
+  }
+  
+
+/*comment*/
+
+.comment-field {
+    display: none; /* Initially hidden */
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f7fafc; /* Light background */
+    border-radius: 8px;
+  }
+  
+  .comment-field.hidden {
+    display: block; /* Show when toggled */
+  }
+  
+  .comment-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    resize: vertical;
+    color: #2d3748; /* Dark text */
+    background-color: #fff; /* White background */
+  }
+  
+  .comment-textarea:focus {
+    outline: none;
+    border-color: #63b3ed; /* Focused border */
+    box-shadow: 0 0 0 1px #63b3ed;
+  }
+  
+/* General Announcement Section */
+.announcement-section {
+    border-radius: 8px;
+  
+    position: fixed;
+    top: 5rem; /* Adjust this value to align with the post section */
+    right: 2rem; /* Adds a small space on the right side */
+    width: 30%; /* Takes up 1/3 of the width */
+    height: calc(100vh - 6rem); /* Makes it take the remaining height, adjusting for the space at the top */
+    padding: 1rem;
+    background-color: white; /* Optional: Adds background for visibility */
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow for separation */
+    z-index: 10; /* Ensures it stays on top of other content */
+    overflow: hidden; /* Prevents scrolling within this section */
+  }
+  
+  
+  
+  .section-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 700; /* font-bold */
+    margin-bottom: 1rem; /* mb-4 */
+    text-align: center; /* Centers the title horizontally */
+  }
+  
+  /* Announcement List */
+  .announcement-list {
+    margin-top: 1rem;
+    /*space-y-4:  equivalent to the Tailwind class "space-y-4" to add vertical spacing */;
+  }
+  
+  /* Announcement Card */
+  .announcement-card {
+    background-color: white;
+    padding: 1rem; /* p-4 */
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* shadow */
+  }
+  
+  /* Header within each Announcement Card */
+  .announcement-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem; /* mb-2 */
+  }
+  
+  .username {
+    font-weight: 700; /* font-bold */
+  }
+  
+  .date {
+    color: #6b7280; /* text-gray-400 */
+    margin-left: 0.5rem; /* ml-2 */
+  }
+  
+  /* Title and Description */
+  .announcement-title {
+    font-weight: 700; /* font-bold */
+    margin-bottom: 0.5rem; /* mb-2 */
+  }
+  
+  .announcement-description {
+    color: #4b5563; /* text-gray-600 */
+    margin-bottom: 1rem; /* mb-4 */
+  }
+  
+  /* Buttons */
+  .comment-button {
+    background-color: #1f2937; /* bg-gray-800 */
+    color: white;
+    padding: 0.25rem 1rem; /* py-1 px-4 */
+    border-radius: 0.5rem; /* rounded-lg */
+    transition: background-color 0.3s ease;
+  }
+  
+  .comment-button:hover {
+    background-color: #374151; /* hover:bg-gray-700 */
+  }
+  
+  .comment-box {
+    display: none; /* Hidden by default */
+    margin-top: 1rem;
+  }
+  
+  .comment-textarea {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db; /* Tailwind's border-gray-300 */
+    border-radius: 0.5rem;
+    resize: vertical;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #1f2937;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  
+  .comment-textarea:focus {
+    border-color: #4B5563; /* Tailwind's gray-600 */
+  }
+  
+  .submit-comment-button {
+    background-color: #1f2937; /* same as comment-button */
+    color: white;
+    padding: 0.25rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-comment-button:hover {
+    background-color: #374151;
+  }
+  
+  .more-button {
+    background-color: #1f2937; /* bg-gray-800 */
+    color: white;
+    padding: 0.25rem 1rem; /* py-1 px-4 */
+    border-radius: 0.5rem; /* rounded-lg */
+    width: 100%; /* w-full */
+    transition: background-color 0.3s ease;
+  }
+  
+  .more-button:hover {
+    background-color: #374151; /* hover:bg-gray-700 */
+  }
+  

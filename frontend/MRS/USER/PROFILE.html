@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MRS-Profile</title>
+  <link rel="icon" href="../MRS/images/FAVICON.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/MRS/USER/user.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+</head>
+<body>
+  <main class="flex min-h-screen">
+    <!-- Load the navbar dynamically -->
+    <div id="navbar-container"></div>
+
+    <!-- PROFILE CONTENT -->
+    <main class="profile-main">
+      <h1 class="profile-name">MY NAME</h1>
+
+      <div class="profile-banner"></div>
+
+      <section class="profile-header">
+        <div class="profile-image-container">
+          <img
+            alt="User profile picture"
+            class="profile-image"
+            id="profileImage"
+            src="../MRS/images/default-picture.jpg"
+          />
+        </div>
+        <div class="profile-info">
+          <p class="profile-username" id="profileUsername">@username</p>
+          <a class="profile-email" id="profileEmail" href="#">email@example.com</a>
+        </div>
+      
+
+        <!-- Edit Profile Modal (Initially Hidden) -->
+        <div class="edit-profile-modal hidden" id="editProfileModal">
+            <div class="modal-overlay"></div> <!-- Blurred background -->
+            <div class="edit-profile-content">
+
+            <!-- X Close Button -->
+            <span class="material-symbols-outlined close-button" id="closeEditModal">close</span>
+
+            <form id="editProfileForm">
+                <h5 class="edit-profile-title">Edit Profile</h5>
+                <label for="profilePicture">Change Profile Picture</label>
+                <input type="file" id="profilePicture" name="profilePicture" accept="image/*" />
+
+        
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" />
+        
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" />
+        
+                <label for="idnumber">ID Number</label>
+                <input type="text" id="idnumber" name="idnumber" />
+        
+                <label for="program">Program</label>
+                <input type="text" id="program" name="program" />
+        
+                <label for="section">Section</label>
+                <input type="text" id="section" name="section" />
+        
+                <label for="contactnumber">Contact Number</label>
+                <input type="text" id="contactnumber" name="contactnumber" />
+        
+                <button type="submit">Save Changes</button>
+            </form>
+            </div>
+        </div>
+  
+        </div>
+        <button class="edit-button" type="button" id="editProfileBtn">Edit Profile</button>
+    </section>
+
+    <section class="profile-details">
+        <div class="detail-box">
+          <p class="detail-title">ID Number</p>
+          <p class="detail-value" id="profileIDNumber"></p>
+        </div>
+        <div class="detail-box">
+          <p class="detail-title">Program</p>
+          <p class="detail-value" id="profileProgram"></p>
+        </div>
+        <div class="detail-box">
+          <p class="detail-title">Section</p>
+          <p class="detail-value" id="profileSection"></p>
+        </div>
+        <div class="detail-box">
+          <p class="detail-title">Contact Number</p>
+          <p class="detail-value" id="profileContact"></p>
+        </div>
+      </section>
+      
+
+      <section class="profile-actions">
+        <button class="action-button" type="button">
+          <div class="action-content">
+            <i class="far fa-file-alt"></i>
+            <span>History of Request</span>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <button class="action-button" type="button">
+          <span>Policy</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <button class="action-button" type="button">
+          <span>About Us</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </section>
+
+
+        <!-- History of Request Container aligned to right -->
+        <div class="request-history-wrapper" id="requestHistoryWrapper">
+            <h2>History of Request</h2>
+            <div class="request-history">
+                <img src="https://storage.googleapis.com/a1aa/image/c893e91c-00d2-4e99-ad19-959fa04f253a.jpg" 
+                    alt="Image showing a plumbing issue with pipes and a wrench" 
+                    class="request-img" width="80" height="80" />
+                <div class="request-content">
+                    <div>
+                        <p class="request-username">@Username</p>
+                        <p class="request-title">Plumbing Issue</p>
+                        <p class="request-description">*Detailed discussion of reported issue by other users*</p>
+                    </div>
+                    <div class="request-footer">
+                        <span>29 Nov, 01:20 pm</span>
+                        <button class="view-status-btn" type="button">View Status</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                <!-- View Status Modal (Initially Hidden) -->
+        <div class="status-modal hidden" id="statusModal">
+            <div class="modal-overlay"></div> <!-- Blurred background -->
+            <div class="status-modal-content">
+                <span class="material-symbols-outlined close-button" id="closeStatusModal">close</span>
+                <h5>Request Status</h5>
+                
+                <!-- Status Content -->
+                <p><strong>Status:</strong> <span id="requestStatus">Pending</span></p>
+                <p><strong>Assigned Personnel:</strong> <span id="assignedPersonnel">John Doe</span></p>
+                <p><strong>Details:</strong></p>
+                <p id="requestDetails">Detailed discussion of the issue...</p>
+
+            </div>
+        </div>
+
+
+  
+  
+    </main>
+  </main>
+
+  <footer>
+    <h1>"Seamless Maintenance, Effortless Solutions."</h1>
+  </footer>
+
+  <script src="/MRS/USER/user.js"></script>
+</body>
+</html>
