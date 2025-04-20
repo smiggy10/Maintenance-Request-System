@@ -3,8 +3,9 @@ const db = require('../config/db');
 // Create new maintenance request
 exports.createRequest = (req, res) => {
     const { title, description, user_id, priority } = req.body;
-    const sql = 'INSERT INTO maintenance_requests (title, description, user_id, priority) VALUES (?, ?, ?, ?)';
-    db.query(sql, [title, description, user_id, priority], (err, result) => {
+    const imagePath = req.file ? req.file.path : null; // Handle image upload if needed
+    const sql = 'INSERT INTO maintenance_requests (title, description, user_id, priority, image_path) VALUES (?, ?, ?, ?, ?)';
+    db.query(sql, [title, description, user_id, priority, imagePath], (err, result) => {
         if (err) return res.status(500).json({ error: err });
         res.status(201).json({ message: 'Request created', requestId: result.insertId });
     });
@@ -54,5 +55,15 @@ exports.deleteRequest = (req, res) => {
     db.query(sql, [req.params.id], (err, result) => {
         if (err) return res.status(500).json({ error: err });
         res.json({ message: 'Request deleted' });
+    });
+};
+
+// Assign staff to a request
+exports.assignStaff = (req, res) => {
+    const { requestId, staffId } = req.body;
+    const sql = 'UPDATE maintenance_requests SET assigned_to = ? WHERE id = ?';
+    db.query(sql, [staffId, requestId], (err, result) => {
+        if (err) return res.status(500).json({ error: err });
+        res.json({ message: 'Staff assigned successfully' });
     });
 };

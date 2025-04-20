@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const authenticate = require('../middleware/authenticate');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); // or configure storage
 const maintenanceController = require('../controllers/maintenanceController');
 
 // Create request
@@ -20,5 +22,11 @@ router.put('/:id', maintenanceController.updateRequestStatus);
 
 // Delete request
 router.delete('/:id', maintenanceController.deleteRequest);
+
+// Assign staff to a request
+router.post('/assign', maintenanceController.assignStaff);
+
+// User can upload image
+router.post('/', upload.single('image'), maintenanceController.createRequest);
 
 module.exports = router;
