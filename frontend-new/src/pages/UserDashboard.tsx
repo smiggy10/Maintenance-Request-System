@@ -20,7 +20,6 @@ import {
 } from '@mui/material';
 import {
   Build as BuildIcon,
-  Announcement as AnnouncementIcon,
   Person as PersonIcon,
   Logout as LogoutIcon,
 } from '@mui/icons-material';
@@ -38,20 +37,11 @@ interface MaintenanceRequest {
   date_submitted: string;
 }
 
-interface Announcement {
-  id: number;
-  title: string;
-  content: string;
-  date: string;
-  priority: 'Low' | 'Medium' | 'High';
-}
-
 const UserDashboard = () => {
   const navigate = useNavigate();
   const { logout, user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [requests, setRequests] = useState<MaintenanceRequest[]>([]);
-  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -124,7 +114,7 @@ const UserDashboard = () => {
                   Welcome{user && user.name ? `, ${user.name}` : ''}!
                 </Typography>
                 <Typography variant="body1" sx={{ color: '#fff' }}>
-                  Here you can manage your maintenance requests and view important announcements.
+                  Here you can manage your maintenance requests.
                 </Typography>
               </CardContent>
             </Card>
@@ -207,54 +197,6 @@ const UserDashboard = () => {
                 <Button sx={{ mt: 2, borderRadius: 24, fontWeight: 600, color: 'primary.main' }} onClick={() => navigate('/maintenance-requests')}>
                   VIEW ALL REQUESTS
                 </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Recent Announcements */}
-          <Grid item xs={12}>
-            <Card sx={{ borderLeft: '6px solid', borderColor: 'primary.main', borderRadius: 3, boxShadow: 2 }}>
-              <CardContent>
-                <Typography variant="h6" color="primary.main" gutterBottom>
-                  Recent Announcements
-                </Typography>
-                <List>
-                  {announcements.map((announcement) => (
-                    <ListItem key={announcement.id} divider>
-                      <ListItemText
-                        primary={announcement.title}
-                        secondary={
-                          <>
-                            <Typography component="span" variant="body2" color="text.primary">
-                              {announcement.content}
-                            </Typography>
-                            <br />
-                            <Typography component="span" variant="caption" color="text.secondary">
-                              Posted: {announcement.date}
-                            </Typography>
-                          </>
-                        }
-                      />
-                      <ListItemSecondaryAction>
-                        <Chip
-                          label={announcement.priority}
-                          color={announcement.priority === 'High' ? 'error' : 'default'}
-                          size="small"
-                        />
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                  ))}
-                </List>
-                <CardActions>
-                  <Button
-                    size="small"
-                    color="primary"
-                    sx={{ borderRadius: 24, fontWeight: 600 }}
-                    onClick={() => navigate('/announcements')}
-                  >
-                    View All Announcements
-                  </Button>
-                </CardActions>
               </CardContent>
             </Card>
           </Grid>
