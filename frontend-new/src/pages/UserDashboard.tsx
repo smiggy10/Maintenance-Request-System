@@ -110,10 +110,10 @@ const UserDashboard = () => {
           <Grid item xs={12}>
             <Card sx={{ bgcolor: 'primary.main', color: '#fff', borderRadius: 3, boxShadow: 2 }}>
               <CardContent>
-                <Typography variant="h5" fontWeight={700} sx={{ color: '#fff' }}>
+                <Typography variant="h5" fontWeight={700} sx={{ color: '#fff', pl: 3 }}>
                   Welcome{user && user.name ? `, ${user.name}` : ''}!
                 </Typography>
-                <Typography variant="body1" sx={{ color: '#fff' }}>
+                <Typography variant="body1" sx={{ color: '#fff', pl: 3 }}>
                   Here you can manage your maintenance requests.
                 </Typography>
               </CardContent>
@@ -125,7 +125,7 @@ const UserDashboard = () => {
           <Grid item xs={12} md={4}>
             <Card sx={{ borderLeft: '6px solid', borderColor: 'primary.main', borderRadius: 3, boxShadow: 2 }}>
               <CardContent>
-                <Typography variant="h6" color="primary.main" gutterBottom>
+                <Typography variant="h6" color="primary.main" gutterBottom sx={{ pl: 3 }}>
                   Quick Actions
                 </Typography>
                 <List>
@@ -160,7 +160,7 @@ const UserDashboard = () => {
           <Grid item xs={12} md={8}>
             <Card sx={{ borderLeft: '6px solid', borderColor: 'primary.main', borderRadius: 3, boxShadow: 2 }}>
               <CardContent>
-                <Typography variant="h6" color="primary.main" gutterBottom>
+                <Typography variant="h6" color="primary.main" gutterBottom sx={{ pl: 3 }}>
                   Recent Maintenance Requests
                 </Typography>
                 <List>

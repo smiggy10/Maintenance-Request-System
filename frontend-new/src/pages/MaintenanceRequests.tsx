@@ -27,6 +27,7 @@ import {
 } from '@mui/material';
 import { Add as AddIcon, CloudUpload as CloudUploadIcon } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import api from '../config/api';
 
 interface MaintenanceRequest {
@@ -51,13 +52,19 @@ interface Staff {
 
 const MaintenanceRequests = () => {
   const { user } = useAuth();
-  const [open, setOpen] = useState(false);
   const [requests, setRequests] = useState<MaintenanceRequest[]>([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState<MaintenanceRequest | null>(null);
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/user-dashboard');
+  };
 
   const [staff, setStaff] = useState<Staff[]>([]);
-
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -94,7 +101,6 @@ const MaintenanceRequests = () => {
     setSelectedImage(null);
     setImagePreview(null);
     setError(null);
-    setSuccess(null);
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,10 +114,9 @@ const MaintenanceRequests = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    
+
     try {
       setError(null);
-      setSuccess(null);
 
       // Log form data
       console.log('Form Data:', {
@@ -137,9 +142,8 @@ const MaintenanceRequests = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      
+
       console.log('Response:', response.data);
-      setSuccess('Maintenance request submitted successfully');
       handleClose();
       fetchRequests(); // Refresh the list
     } catch (error: any) {
@@ -152,7 +156,6 @@ const MaintenanceRequests = () => {
   const handleAssignStaff = async (requestId: number, staffId: number) => {
     try {
       await api.post(`/requests/${requestId}/assign`, { staffId });
-      setSuccess('Staff assigned successfully');
       fetchRequests(); // Refresh the list
     } catch (error) {
       console.error('Error assigning staff:', error);
@@ -163,7 +166,6 @@ const MaintenanceRequests = () => {
   const handleStatusChange = async (requestId: number, newStatus: string) => {
     try {
       await api.post(`/requests/${requestId}/status`, { status: newStatus });
-      setSuccess('Status updated successfully');
       fetchRequests(); // Refresh the list
     } catch (error) {
       console.error('Error updating status:', error);
@@ -179,17 +181,24 @@ const MaintenanceRequests = () => {
   return (
     <Box sx={{ flexGrow: 1, height: '100vh', overflow: 'auto' }}>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-          <Typography variant="h4" component="h1">
-            Maintenance Requests
-          </Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={handleClickOpen}
-          >
-            New Request
-          </Button>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="h4" component="h1" sx={{ color: 'white' }}>
+              Maintenance Requests
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <IconButton onClick={handleBack} sx={{ mb: 2 }}>
+              <img src="/images/close.png" alt="Back" style={{ width: 40, height: 40 }} />
+            </IconButton>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={handleClickOpen}
+            >
+              New Request
+            </Button>
+          </Box>
         </Box>
 
         {error && (
