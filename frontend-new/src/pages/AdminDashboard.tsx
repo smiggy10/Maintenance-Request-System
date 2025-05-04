@@ -96,7 +96,7 @@ const AdminDashboard = () => {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [openUserDialog, setOpenUserDialog] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [staff, setStaff] = useState([]);
+  const [staff, setStaff] = useState<User[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -109,8 +109,7 @@ const AdminDashboard = () => {
         setLoading(false);
       }
     };
-    fetchData();
-    // Fetch staff for dashboard card
+    
     const fetchStaff = async () => {
       try {
         const response = await api.get('/staff');
@@ -119,8 +118,17 @@ const AdminDashboard = () => {
         console.error('Error fetching staff:', error);
       }
     };
+
+    // Fetch data when component mounts
+    fetchData();
     fetchStaff();
-  }, []);
+
+    // Fetch data whenever currentPage changes to 'dashboard'
+    if (currentPage === 'dashboard') {
+      fetchData();
+      fetchStaff();
+    }
+  }, [currentPage]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
