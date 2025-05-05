@@ -24,3 +24,4 @@ router.put('/:id/role', updateUserRole);
 router.delete('/:id', deleteUser);
 
 module.exports = router;
+module.exports = router;

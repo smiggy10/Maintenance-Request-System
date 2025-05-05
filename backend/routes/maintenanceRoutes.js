@@ -1,24 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const authenticate = require('../middleware/authenticate');
-const maintenanceController = require('../controllers/maintenanceController');
+const multer = require('multer');
+const path = require('path');
+const { 
+    createRequest, 
+    getRequests, 
+    getUserRequests, 
+    updateRequestStatus, 
+    assignStaff,
+    updateStatus 
+} = require('../controllers/maintenanceController');
 
-// Create request
-router.post('/', maintenanceController.createRequest);
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
 
-// Get all (admin view)
-router.get('/', maintenanceController.getAllRequests);
+const upload = multer({ storage: storage });
 
-// Get by ID
-router.get('/:id', maintenanceController.getRequestById);
-
-// Get requests by user
-router.get('/user/:userId', maintenanceController.getRequestsByUser);
-
-// Update status
-router.put('/:id', maintenanceController.updateRequestStatus);
-
-// Delete request
-router.delete('/:id', maintenanceController.deleteRequest);
+// Routes
+router.post('/', upload.single('image'), createRequest);
+router.get('/', getRequests);
+router.get('/user/:userId', getUserRequests);
+router.post('/:requestId/status', updateStatus);
+router.post('/:requestId/assign', assignStaff);
 
 module.exports = router;
