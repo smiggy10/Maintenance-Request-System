@@ -79,13 +79,9 @@ const MaintenanceStaff = () => {
   const handleDelete = async (staffId: number) => {
     if (window.confirm('Are you sure you want to delete this staff member?')) {
       try {
-        const response = await api.delete(`/staff/${staffId}`);
-        if (response.status === 200) {
-          setSuccess('Staff member deleted successfully');
-          fetchStaff();
-        } else {
-          throw new Error('Failed to delete staff member');
-        }
+        await api.delete(`/staff/${staffId}`);
+        setSuccess('Staff member deleted successfully');
+        fetchStaff();
       } catch (error) {
         console.error('Error deleting staff:', error);
         setError('Failed to delete staff member');

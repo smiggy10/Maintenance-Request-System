@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import {
   Build as BuildIcon,
+  Announcement as AnnouncementIcon,
   Person as PersonIcon,
   Logout as LogoutIcon,
 } from '@mui/icons-material';
@@ -27,6 +28,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import api from '../config/api';
+import DashboardAnnouncements from '../components/DashboardAnnouncements';
 
 interface MaintenanceRequest {
   id: number;
@@ -36,6 +38,8 @@ interface MaintenanceRequest {
   priority: 'Low' | 'Medium' | 'High';
   date_submitted: string;
 }
+
+
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -114,7 +118,7 @@ const UserDashboard = () => {
                   Welcome{user && user.name ? `, ${user.name}` : ''}!
                 </Typography>
                 <Typography variant="body1" sx={{ color: '#fff', pl: 3 }}>
-                  Here you can manage your maintenance requests.
+                  Here you can manage your maintenance requests and view important announcements.
                 </Typography>
               </CardContent>
             </Card>
@@ -201,9 +205,21 @@ const UserDashboard = () => {
             </Card>
           </Grid>
         </Grid>
+        <Box sx={{ mt: 4 }}>
+          <Grid container spacing={3}>
+            {/* Recent Announcements */}
+            <Grid item xs={12}>
+              <Card sx={{ borderLeft: '6px solid', borderColor: 'primary.main', borderRadius: 3, boxShadow: 2 }}>
+                <CardContent>
+                  <DashboardAnnouncements />
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Box>
       </Container>
     </Box>
   );
 };
 
-export default UserDashboard; 
+export default UserDashboard;

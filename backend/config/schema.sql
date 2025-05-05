@@ -52,6 +52,17 @@ CREATE TABLE maintenance_staff (
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Add comments table
+CREATE TABLE IF NOT EXISTS announcement_comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    announcement_id INT NOT NULL,
+    user_id INT NOT NULL,
+    comment TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (announcement_id) REFERENCES announcements(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 -- Modify maintenance_requests table to reference maintenance_staff
 ALTER TABLE maintenance_requests
 DROP FOREIGN KEY maintenance_requests_ibfk_2;
