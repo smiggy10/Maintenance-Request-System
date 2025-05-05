@@ -11,9 +11,11 @@ import {
   TextField,
   IconButton,
   Collapse,
+  CircularProgress
 } from '@mui/material';
 import { Send as SendIcon, ChatBubbleOutline as CommentIcon } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
+import axios from 'axios';
 
 interface Comment {
   id: number;
@@ -30,7 +32,6 @@ interface Announcement {
   content: string;
   date: string;
   priority: 'Low' | 'Medium' | 'High';
-  category: string;
   comments?: Comment[];
 }
 
@@ -42,40 +43,24 @@ const DashboardAnnouncements: React.FC<DashboardAnnouncementsProps> = ({ maxItem
   const { user } = useAuth();
   const [expandedAnnouncement, setExpandedAnnouncement] = useState<number | null>(null);
   const [commentText, setCommentText] = useState('');
-  const [announcementsWithComments, setAnnouncementsWithComments] = useState<Announcement[]>([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchAnnouncements = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/announcements');
+      setAnnouncements(response.data);
+    } catch (err) {
+      console.error('Error fetching announcements:', err);
+      setError('Failed to load announcements');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Initialize with mock data
-    const mockAnnouncements: Announcement[] = [
-      {
-        id: 1,
-        title: 'Scheduled Maintenance',
-        content: 'There will be scheduled maintenance on the HVAC system this weekend.',
-        date: '2024-05-15',
-        priority: 'High',
-        category: 'Maintenance',
-        comments: []
-      },
-      {
-        id: 2,
-        title: 'New Staff Member',
-        content: 'Welcome our new maintenance team member, John Smith.',
-        date: '2024-05-14',
-        priority: 'Medium',
-        category: 'Staff',
-        comments: []
-      },
-      {
-        id: 3,
-        title: 'Office Hours Update',
-        content: 'Office hours will be extended during the holiday season.',
-        date: '2024-05-13',
-        priority: 'Low',
-        category: 'General',
-        comments: []
-      },
-    ];
-    setAnnouncementsWithComments(mockAnnouncements);
+    fetchAnnouncements();
   }, []);
 
   const getPriorityColor = (priority: string) => {
@@ -108,7 +93,7 @@ const DashboardAnnouncements: React.FC<DashboardAnnouncementsProps> = ({ maxItem
       }
     };
 
-    setAnnouncementsWithComments(prev => 
+    setAnnouncements(prev => 
       prev.map(announcement => 
         announcement.id === announcementId
           ? {
@@ -122,6 +107,30 @@ const DashboardAnnouncements: React.FC<DashboardAnnouncementsProps> = ({ maxItem
     setCommentText('');
   };
 
+  if (loading) {
+    return (
+      <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ p: 2 }}>
+        <Typography color="error">{error}</Typography>
+      </Box>
+    );
+  }
+
+  if (announcements.length === 0) {
+    return (
+      <Box sx={{ p: 2 }}>
+        <Typography variant="body1">No announcements to display.</Typography>
+      </Box>
+    );
+  }
+
   return (
     <Box>
       <Box sx={{ mb: 2, pl: 3 }}>
@@ -130,7 +139,7 @@ const DashboardAnnouncements: React.FC<DashboardAnnouncementsProps> = ({ maxItem
         </Typography>
       </Box>
       <List>
-        {announcementsWithComments.slice(0, maxItems).map((announcement) => (
+        {announcements.slice(0, maxItems).map((announcement) => (
           <React.Fragment key={announcement.id}>
             <ListItem 
               divider
@@ -168,16 +177,9 @@ const DashboardAnnouncements: React.FC<DashboardAnnouncementsProps> = ({ maxItem
                   {announcement.content}
                 </Typography>
                 
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1, alignItems: 'center' }}>
-                  <Typography variant="caption" color="text.secondary">
-                    {announcement.date}
-                  </Typography>
-                  <Chip 
-                    label={announcement.category} 
-                    variant="outlined" 
-                    size="small"
-                  />
-                </Box>
+                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
+                  {announcement.date}
+                </Typography>
               </Box>
 
               <Collapse in={expandedAnnouncement === announcement.id} sx={{ width: '100%', mt: 2 }}>

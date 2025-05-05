@@ -21,6 +21,7 @@ const maintenanceRoutes = require('./routes/maintenanceRoutes');
 const maintenanceStaffRoutes = require('./routes/maintenanceStaffRoutes');
 const userRoutes = require('./routes/userRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
+const announcementRoutes = require('./routes/announcementRoutes');
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -28,6 +29,7 @@ app.use('/api/requests', maintenanceRoutes);
 app.use('/api/staff', maintenanceStaffRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/announcements', announcementRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

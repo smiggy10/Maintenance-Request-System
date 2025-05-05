@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -28,16 +28,9 @@ import {
   Delete as DeleteIcon,
   Edit as EditIcon,
 } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-interface Announcement {
-  id: number;
-  title: string;
-  content: string;
-  date: string;
-  priority: 'Low' | 'Medium' | 'High';
-  category: string;
-}
+import { Announcement } from '../types';
 
 interface AnnouncementFormData {
   title: string;
@@ -47,33 +40,38 @@ interface AnnouncementFormData {
 }
 
 const Announcements = () => {
-  const [announcements, setAnnouncements] = useState<Announcement[]>([
-    {
-      id: 1,
-      title: 'Scheduled Maintenance',
-      content: 'There will be scheduled maintenance on the HVAC system this weekend.',
-      date: '2024-03-15',
-      priority: 'High',
-      category: 'Maintenance',
-    },
-    {
-      id: 2,
-      title: 'New Staff Member',
-      content: 'Welcome our new maintenance team member, John Smith.',
-      date: '2024-03-14',
-      priority: 'Medium',
-      category: 'Staff',
-    },
-  ]);
-
+  const navigate = useNavigate();
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
   const [formData, setFormData] = useState<AnnouncementFormData>({
     title: '',
     content: '',
     priority: 'Medium',
-    category: '',
+    category: 'General',
   });
+
+  useEffect(() => {
+    const fetchAnnouncements = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/announcements');
+        if (!response.ok) {
+          throw new Error('Failed to fetch announcements');
+        }
+        const data = await response.json();
+        setAnnouncements(data);
+      } catch (err) {
+        console.error('Error fetching announcements:', err);
+        setError('Failed to load announcements. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnnouncements();
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -86,7 +84,7 @@ const Announcements = () => {
       title: '',
       content: '',
       priority: 'Medium',
-      category: '',
+      category: 'General',
     });
   };
 
@@ -96,27 +94,39 @@ const Announcements = () => {
       title: announcement.title,
       content: announcement.content,
       priority: announcement.priority,
-      category: announcement.category,
+      category: announcement.category || 'General',
     });
     setOpen(true);
   };
 
   const handleDelete = async (id: number) => {
-    try {
-      // TODO: Replace with actual API call
-      // await axios.delete(`/api/announcements/${id}`);
-      setAnnouncements(announcements.filter(a => a.id !== id));
-    } catch (error) {
-      console.error('Error deleting announcement:', error);
-      // TODO: Add error handling UI
+    if (window.confirm('Are you sure you want to delete this announcement?')) {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`http://localhost:5000/api/announcements/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to delete announcement');
+        }
+
+        setAnnouncements(announcements.filter(announcement => announcement.id !== id));
+      } catch (err) {
+        console.error('Error deleting announcement:', err);
+        setError('Failed to delete announcement. Please try again.');
+      }
     }
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = event.target;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | { name?: string; value: unknown }>) => {
+    const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name as string]: value,
     }));
   };
 
@@ -127,32 +137,95 @@ const Announcements = () => {
     }));
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const fetchAnnouncements = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/announcements');
+      if (!response.ok) {
+        throw new Error('Failed to fetch announcements');
+      }
+      const data = await response.json();
+      setAnnouncements(data);
+    } catch (err) {
+      console.error('Error fetching announcements:', err);
+      setError('Failed to load announcements. Please try again later.');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted with data:', formData);
     
     try {
-      // TODO: Replace with actual API call
-      // const response = await axios.post('/api/announcements', formData);
+      const token = localStorage.getItem('token');
+      const userJson = localStorage.getItem('user');
       
-      if (editingAnnouncement) {
-        setAnnouncements(announcements.map(a => 
-          a.id === editingAnnouncement.id 
-            ? { ...a, ...formData, date: new Date().toISOString().split('T')[0] }
-            : a
-        ));
-      } else {
-        const newAnnouncement: Announcement = {
-          id: announcements.length + 1,
-          ...formData,
-          date: new Date().toISOString().split('T')[0],
-        };
-        setAnnouncements([...announcements, newAnnouncement]);
+      console.log('Token from localStorage:', token ? 'exists' : 'missing');
+      console.log('User from localStorage:', userJson || 'missing');
+      
+      if (!token || !userJson) {
+        const errorMsg = `User not authenticated. Token: ${token ? 'exists' : 'missing'}, User: ${userJson ? 'exists' : 'missing'}`;
+        console.error(errorMsg);
+        setError('Please log in to create announcements');
+        return;
       }
       
-      handleClose();
-    } catch (error) {
-      console.error('Error submitting announcement:', error);
-      // TODO: Add error handling UI
+      const user = JSON.parse(userJson);
+      const userId = user.id;
+      const userName = user.name || 'Unknown User';
+
+      const url = editingAnnouncement 
+        ? `http://localhost:5000/api/announcements/${editingAnnouncement.id}`
+        : 'http://localhost:5000/api/announcements';
+      
+      const method = editingAnnouncement ? 'PUT' : 'POST';
+      const requestBody = {
+        ...formData,
+        created_by: editingAnnouncement ? undefined : parseInt(userId, 10)
+      };
+      
+      console.log('Sending request to:', url);
+      console.log('Request method:', method);
+      console.log('Request body:', requestBody);
+      
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      // Handle empty responses
+      const responseText = await response.text();
+      let responseData = null;
+      
+      if (responseText) {
+        try {
+          responseData = JSON.parse(responseText);
+        } catch (e) {
+          console.warn('Response is not valid JSON:', responseText);
+        }
+      }
+      
+      console.log('Response status:', response.status);
+      console.log('Response data:', responseData);
+
+      if (!response.ok) {
+        throw new Error(responseData?.message || 'Failed to save announcement');
+      }
+      
+      // Clear the form and close the dialog
+      setFormData({ title: '', content: '', priority: 'Medium', category: 'General' });
+      setEditingAnnouncement(null);
+      setOpen(false);
+      
+      // Refresh the announcements list to get the latest data from the server
+      await fetchAnnouncements();
+      
+    } catch (err) {
+      console.error('Error saving announcement:', err);
+      setError(err instanceof Error ? err.message : 'Failed to save announcement. Please try again.');
     }
   };
 
@@ -171,7 +244,29 @@ const Announcements = () => {
 
   return (
     <Box sx={{ flexGrow: 1, height: '100vh', overflow: 'auto' }}>
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4, position: 'relative' }}>
+        <IconButton 
+          onClick={() => navigate('/admin-dashboard')} 
+          sx={{ 
+            position: 'absolute', 
+            left: 0, 
+            top: 0,
+            '&:hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.04)'
+            }
+          }}
+        >
+          <img 
+            src="/images/close.png" 
+            alt="Close" 
+            style={{ width: '24px', height: '24px' }} 
+          />
+        </IconButton>
+        {error && (
+          <Box sx={{ mb: 2, p: 2, backgroundColor: 'error.light', color: 'white', borderRadius: 1 }}>
+            <Typography>{error}</Typography>
+          </Box>
+        )}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
           <Typography variant="h4" component="h1">
             Announcements

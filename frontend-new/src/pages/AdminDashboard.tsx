@@ -55,7 +55,10 @@ import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import MaintenanceRequests from './MaintenanceRequests';
 import MaintenanceStaff from './MaintenanceStaff';
+import DashboardAnnouncements from '../components/DashboardAnnouncements';
+import Announcements from './Announcements';
 import api from '../config/api';
+import { Announcement } from '../types';
 
 interface User {
   id: number;
@@ -73,14 +76,6 @@ interface MaintenanceRequest {
   priority: 'Low' | 'Medium' | 'High';
   date_submitted: string;
   assigned_staff_name?: string;
-}
-
-interface Announcement {
-  id: number;
-  title: string;
-  content: string;
-  date: string;
-  priority: 'Low' | 'Medium' | 'High';
 }
 
 const drawerWidth = 240;
@@ -356,9 +351,36 @@ const AdminDashboard = () => {
             </Grid>
           )}
           {currentPage === 'dashboard' && (
-            <Typography variant="h4" component="h1" gutterBottom color="primary.main">
-              Welcome to the Maintenance Request System
-            </Typography>
+            <>
+              <Typography variant="h4" component="h1" gutterBottom color="primary.main">
+                Welcome to the Maintenance Request System
+              </Typography>
+              
+              <Box sx={{ 
+                mt: 4, 
+                bgcolor: 'background.paper', 
+                borderRadius: 2, 
+                boxShadow: 1,
+                p: 3,
+                position: 'relative'
+              }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<AddIcon />}
+                  onClick={() => navigate('/announcements')}
+                  sx={{ 
+                    position: 'absolute',
+                    right: 24,
+                    top: 24,
+                    zIndex: 1
+                  }}
+                >
+                  New Announcement
+                </Button>
+                <DashboardAnnouncements maxItems={5} />
+              </Box>
+            </>
           )}
           {currentPage === 'requests' && <MaintenanceRequests />}
           {currentPage === 'staff' && <MaintenanceStaff />}
