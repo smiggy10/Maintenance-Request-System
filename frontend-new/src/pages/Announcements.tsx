@@ -111,13 +111,14 @@ const Announcements = () => {
         });
 
         if (!response.ok) {
-          throw new Error('Failed to delete announcement');
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to delete announcement');
         }
 
         setAnnouncements(announcements.filter(announcement => announcement.id !== id));
       } catch (err) {
         console.error('Error deleting announcement:', err);
-        setError('Failed to delete announcement. Please try again.');
+        setError(err instanceof Error ? err.message : 'Failed to delete announcement. Please try again.');
       }
     }
   };

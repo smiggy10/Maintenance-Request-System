@@ -50,7 +50,7 @@ const Profile = () => {
             lastName: lastName || '',
             email: user.email,
             role: user.role,
-            department: 'IT' // You might want to fetch this from the backend
+            department: 'DEE' // Changed default department to DEE
           });
         }
       } catch (error) {
@@ -162,11 +162,6 @@ const Profile = () => {
                     margin="normal"
                     disabled
                   />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleUpdateProfile}>
-                    Update Profile
-                  </Button>
                 </Grid>
               </Grid>
             </Grid>

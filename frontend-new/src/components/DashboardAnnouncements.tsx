@@ -11,7 +11,8 @@ import {
   TextField,
   IconButton,
   Collapse,
-  CircularProgress
+  CircularProgress,
+  Button
 } from '@mui/material';
 import { Send as SendIcon, ChatBubbleOutline as CommentIcon } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
@@ -21,9 +22,7 @@ interface Comment {
   id: number;
   comment: string;
   created_at: string;
-  user: {
-    name: string;
-  };
+  user_name: string;
 }
 
 interface Announcement {
@@ -80,31 +79,52 @@ const DashboardAnnouncements: React.FC<DashboardAnnouncementsProps> = ({ maxItem
     setExpandedAnnouncement(expandedAnnouncement === id ? null : id);
   };
 
-  const handleCommentSubmit = (announcementId: number) => {
-    if (!commentText.trim()) return;
+  const handleCommentSubmit = async (announcementId: number) => {
+    if (!commentText.trim() || !user) return;
 
-    // In a real app, you would make an API call here to save the comment
-    const newComment = {
-      id: Date.now(), // Temporary ID, will be replaced by the server
-      comment: commentText,
-      created_at: new Date().toISOString(),
-      user: {
-        name: user?.name || 'Anonymous'
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('Please log in to post comments');
+        return;
       }
-    };
 
-    setAnnouncements(prev => 
-      prev.map(announcement => 
-        announcement.id === announcementId
-          ? {
-              ...announcement,
-              comments: [...(announcement.comments || []), newComment]
-            }
-          : announcement
-      )
-    );
+      const response = await axios.post(
+        `http://localhost:5000/api/announcements/${announcementId}/comments`,
+        {
+          comment: commentText
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
 
-    setCommentText('');
+      // Update the announcements state with the new comment
+      setAnnouncements(prev => 
+        prev.map(announcement => 
+          announcement.id === announcementId
+            ? {
+                ...announcement,
+                comments: [...(announcement.comments || []), response.data]
+              }
+            : announcement
+        )
+      );
+
+      setCommentText('');
+    } catch (err: any) {
+      console.error('Error posting comment:', err);
+      if (err.response?.status === 401) {
+        setError('Please log in to post comments');
+      } else if (err.response?.status === 403) {
+        setError('Your session has expired. Please log in again.');
+      } else {
+        setError('Failed to post comment. Please try again.');
+      }
+    }
   };
 
   if (loading) {
@@ -183,7 +203,7 @@ const DashboardAnnouncements: React.FC<DashboardAnnouncementsProps> = ({ maxItem
               </Box>
 
               <Collapse in={expandedAnnouncement === announcement.id} sx={{ width: '100%', mt: 2 }}>
-                <Box sx={{ width: '100%', mt: 2 }}>
+                <Box sx={{ width: '100%' }}>
                   <Typography variant="subtitle2" color="text.secondary" gutterBottom>
                     Comments ({announcement.comments?.length || 0})
                   </Typography>
@@ -194,13 +214,13 @@ const DashboardAnnouncements: React.FC<DashboardAnnouncementsProps> = ({ maxItem
                       <ListItem key={comment.id} dense>
                         <ListItemAvatar>
                           <Avatar sx={{ width: 24, height: 24, fontSize: '0.8rem' }}>
-                            {comment.user.name.charAt(0).toUpperCase()}
+                            {(comment.user_name ? comment.user_name.charAt(0).toUpperCase() : '?')}
                           </Avatar>
                         </ListItemAvatar>
                         <ListItemText
                           primary={
                             <Typography variant="body2" component="span">
-                              <strong>{comment.user.name}</strong> • {new Date(comment.created_at).toLocaleString()}
+                              <strong>{comment.user_name}</strong> • {new Date(comment.created_at).toLocaleString()}
                             </Typography>
                           }
                           secondary={comment.comment}
@@ -215,29 +235,31 @@ const DashboardAnnouncements: React.FC<DashboardAnnouncementsProps> = ({ maxItem
                   </List>
                   
                   {/* Add Comment */}
-                  <Box sx={{ display: 'flex', mt: 2 }}>
-                    <TextField
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      placeholder="Add a comment..."
-                      value={commentText}
-                      onChange={(e) => setCommentText(e.target.value)}
-                      onKeyPress={(e) => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                          e.preventDefault();
-                          handleCommentSubmit(announcement.id);
-                        }
-                      }}
-                    />
-                    <IconButton 
-                      color="primary" 
-                      onClick={() => handleCommentSubmit(announcement.id)}
-                      disabled={!commentText.trim()}
-                    >
-                      <SendIcon />
-                    </IconButton>
-                  </Box>
+                  {user && (
+                    <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        placeholder="Add a comment..."
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            handleCommentSubmit(announcement.id);
+                          }
+                        }}
+                      />
+                      <Button
+                        variant="contained"
+                        endIcon={<SendIcon />}
+                        onClick={() => handleCommentSubmit(announcement.id)}
+                        disabled={!commentText.trim()}
+                      >
+                        Send
+                      </Button>
+                    </Box>
+                  )}
                 </Box>
               </Collapse>
             </ListItem>
